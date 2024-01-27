@@ -13,6 +13,7 @@
     <field name="arch" type="xml">
       <tree string="Property">
         <field name="name" string="Title"/>
+        <field name="type"/>
         <field name="postcode" string="Postcode"/>
         <field name="bedrooms" string="Bedrooms"/>
         <field name="living_area" string="Living Area (m2)"/>
@@ -32,6 +33,7 @@
           <h1><field name="name" placeholder="Name"/></h1>
           <group>
             <group>
+              <field name="type"/>
               <field name="postcode"/>
               <field name="date_availability" string="Available From"/>
             </group>
