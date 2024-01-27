@@ -62,7 +62,7 @@
   </record>
 
   <record id="estate_property_search" model="ir.ui.view">
-    <field name="name">estate_property_form</field>
+    <field name="name">estate_property_search</field>
     <field name="model">estate_property</field>
     <field name="arch" type="xml">
       <search string="Tests">
@@ -72,9 +72,9 @@
         <field name="bedrooms"/>
         <field name="living_area"/>
         <field name="facades"/>
-        <filter string="Available" domain="['|', ('state', '=', 'New'), ('state', '=', 'Received')]"/>
+        <filter string="Available" name="available" domain="['|', ('state', '=', 'New'), ('state', '=', 'Received')]"/>
         <group expand="1" string="Group By">
-          <filter string="Postalcode" context="{'group_by':'postcode'}"/>
+          <filter name="postcode" context="{'group_by':'postcode'}"/>
         </group>
       </search>
     </field>
