@@ -20,6 +20,8 @@
         <field name="expected_price" string="Expected Price"/>
         <field name="selling_price" string="Selling Price"/>
         <field name="date_availability" string="Available From"/>
+        <field name="buyer_partner_id"/>
+        <field name="salesman_users_id"/>
       </tree>
     </field>
   </record>
@@ -31,6 +33,7 @@
       <form string="Property Name">
         <sheet>
           <h1><field name="name" placeholder="Name"/></h1>
+          <field name="tag_ids" widget="many2many_tags" placeholder="Tags"/>
           <group>
             <group>
               <field name="type"/>
@@ -38,8 +41,8 @@
               <field name="date_availability" string="Available From"/>
             </group>
             <group>
-              <field name="expected_price"/>
               <field name="selling_price"/>
+              <field name="expected_price"/>
             </group>
           </group>
           <notebook>
@@ -55,6 +58,15 @@
               <field name="garden_area"/>
               <field name="garden_orientation"/>
               <field name="state"/>
+              </group>
+            </page>
+            <page string="Offers">
+              <field name="offer_ids"/>
+            </page>
+            <page string="Other">
+              <group>
+                <field name="salesman_users_id"/>
+                <field name="buyer_partner_id"/>
               </group>
             </page>
           </notebook>
