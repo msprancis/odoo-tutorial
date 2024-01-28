@@ -1,7 +1,7 @@
 from odoo import api, fields, models
 
 class EstateProperty(models.Model):
-    _name = "estate_property"
+    _name = "estate.property"
     _description = "Real Estate bids"
 
     name = fields.Char(required=True)
@@ -44,7 +44,8 @@ class EstateProperty(models.Model):
         #         if offer.price > max_price:
         #             max_price = offer.price
         #     record.best_price = max_price
-            record.best_price = max(record.offer_ids.mapped('price'))
+            prices  =record.offer_ids.mapped('price')
+            record.best_price = max(prices) if prices else 0
 
     @api.onchange("garden")
     def _onchange_garden(self):
