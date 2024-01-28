@@ -31,11 +31,17 @@
     <field name="model">estate.property</field>
     <field name="arch" type="xml">
       <form string="Property Name">
+        <header>
+          <button name="action_sold" type="object" string="Sold"/>
+          <button name="action_cancel" type="object" string="Cancel"/>
+          <button type="action" name="%(estate_property_type_action)d" string="Property Type"/>
+        </header>        
         <sheet>
           <h1><field name="name" placeholder="Name"/></h1>
           <field name="tag_ids" widget="many2many_tags" placeholder="Tags"/>
           <group>
             <group>
+              <field name="state"/>
               <field name="type"/>
               <field name="postcode"/>
               <field name="date_availability" string="Available From"/>
@@ -48,18 +54,17 @@
           </group>
           <notebook>
             <page string="Description">
-            <group>
-              <field name="description"/>
-              <field name="bedrooms"/>
-              <field name="living_area"/>
-              <field name="facades"/>
-              <field name="bedrooms"/>
-              <field name="garage"/>
-              <field name="garden"/>
-              <field name="garden_area"/>
-              <field name="total_area"/>
-              <field name="garden_orientation"/>
-              <field name="state"/>
+              <group>
+                <field name="description"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="facades"/>
+                <field name="bedrooms"/>
+                <field name="garage"/>
+                <field name="garden"/>
+                <field name="garden_area"/>
+                <field name="total_area"/>
+                <field name="garden_orientation"/>
               </group>
             </page>
             <page string="Offers">
