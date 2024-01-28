@@ -1,10 +1,12 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.exceptions import ValidationError
+from odoo.tools import float_compare, float_is_zero
 
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Real Estate bids"
+    _order = "id desc"
     _sql_constraints = [
         ("expected_price", "CHECK(expected_price > 0)", "The expected price must be strictly positive"),
         ("selling_price", "CHECK(selling_price >= 0)", "The offer price must be positive"),
@@ -24,11 +26,11 @@ class EstateProperty(models.Model):
     garden_area = fields.Integer(string="Garden Area (sqm)")
     garden_orientation = fields.Selection(selection=[('North', 'North'), ('South', 'South'), ('East', 'East'), ('West', 'West')])
     active = fields.Boolean(default=True)
-    state = fields.Selection(string="Status", selection=[('New', 'New'), ('Offer', 'Offer'), ('Received', 'Received'), 
+    state = fields.Selection(string="Status", selection=[('New', 'New'), ('Offer Received', 'Offer Received'), 
                                         ('Offer Accepted', 'Offer Accepted'), ('Sold', 'Sold'), ('Canceled', 'Canceled')],
                                         required=True, copy=False, default='New')
     
-    type = fields.Many2one("estate.property.type", string="Property Type")
+    type_id = fields.Many2one("estate.property.type", string="Property Type")
     buyer_partner_id = fields.Many2one("res.partner", string="Buyer", copy=False)
     salesman_users_id = fields.Many2one("res.users", string="Salesman", default=lambda self: self.env.user)
     tag_ids = fields.Many2many("estate.property.tag")
@@ -78,7 +80,7 @@ class EstateProperty(models.Model):
     @api.constrains('selling_price', 'expected_price')
     def _check_selling_price(self):
         for record in self:
-            if record.selling_price < record.expected_price * 0.9:
+            if not float_is_zero(record.selling_price, precision_rounding=0.01) and record.selling_price < record.expected_price * 0.9:
                 raise ValidationError("selling price cannot be lower than 90% of the expected price")
         # all records passed the test, don't return anything
 

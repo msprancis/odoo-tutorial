@@ -13,8 +13,9 @@
     <field name="arch" type="xml">
       <tree string="Property">
         <field name="name" string="Title"/>
-        <field name="type"/>
+        <field name="type_id"/>
         <field name="postcode" string="Postcode"/>
+        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
         <field name="bedrooms" string="Bedrooms"/>
         <field name="living_area"/>
         <field name="expected_price" string="Expected Price"/>
@@ -35,14 +36,14 @@
           <button name="action_sold" type="object" string="Sold"/>
           <button name="action_cancel" type="object" string="Cancel"/>
           <button type="action" name="%(estate_property_type_action)d" string="Property Type"/>
+          <field name="state" widget="statusbar" statusbar_visible="New,Offer Received,Offer Accepted,Sold" options="{'clickable': '1'}"/>
         </header>        
         <sheet>
           <h1><field name="name" placeholder="Name"/></h1>
-          <field name="tag_ids" widget="many2many_tags" placeholder="Tags"/>
+          <field name="tag_ids" widget="many2many_tags" placeholder="Tags" options="{'color_field': 'color'}"/>
           <group>
             <group>
-              <field name="state"/>
-              <field name="type"/>
+              <field name="type_id"/>
               <field name="postcode"/>
               <field name="date_availability" string="Available From"/>
             </group>

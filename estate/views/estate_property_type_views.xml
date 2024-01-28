@@ -2,7 +2,7 @@
 <odoo>
 
   <record id="estate_property_type_action" model="ir.actions.act_window">
-    <field name="name">Properties</field>
+    <field name="name">Types</field>
     <field name="res_model">estate.property.type</field>
     <field name="view_mode">tree,form</field>
   </record>
@@ -11,7 +11,8 @@
     <field name="name">estate_property_type_tree</field>
     <field name="model">estate.property.type</field>
     <field name="arch" type="xml">
-      <tree string="Property">
+      <tree string="Types">
+        <field name="sequence" widget="handle"/>
         <field name="name" string="Property Type"/>
       </tree>
     </field>
@@ -24,6 +25,13 @@
       <form string="Property Name">
         <sheet>
           <h1><field name="name" placeholder="Property Type"/></h1>
+            <field name="property_ids">
+              <tree>
+                <field name="name"/>
+                <field name="expected_price"/>
+                <field name="state"/>
+              </tree>
+            </field>
         </sheet>
       </form>
     </field>
