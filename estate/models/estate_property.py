@@ -84,3 +84,8 @@ class EstateProperty(models.Model):
                 raise ValidationError("selling price cannot be lower than 90% of the expected price")
         # all records passed the test, don't return anything
 
+    @api.ondelete(at_uninstall=False)
+    def _unlink_check(self):
+        for r in self:
+            if r.state == 'New' or r.state == 'Canceled':
+                raise UserError('Can\'t delete New or Canceled')

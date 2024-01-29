@@ -36,3 +36,14 @@ class EstatePropertyOffer(models.Model):
         for record in self:
             record.status = 'Refused'
         return True
+
+    @api.model
+    def create(self, vals):
+        # vals - value of offer we are creating
+        prop_id = vals['property_id']
+        properties = self.env['estate.property']
+        aProp = properties.browse(prop_id)
+        aProp.state = 'Offer Received'
+        if aProp.best_price > vals['price']:
+            raise UserError('Offer lower than best price')
+        return super().create(vals)
