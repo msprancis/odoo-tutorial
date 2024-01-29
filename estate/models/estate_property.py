@@ -15,7 +15,7 @@ class EstateProperty(models.Model):
     name = fields.Char(required=True)
     description = fields.Text()
     postcode = fields.Char()
-    date_availability = fields.Date(copy=False, default=fields.Date.add(fields.Date.today(), days=3))
+    date_availability = fields.Date(copy=False, default=fields.Date.add(fields.Date.today(), days=3), string="Available From")
     expected_price = fields.Float(required=True)
     selling_price = fields.Float(readonly=True, copy=False)
     bedrooms = fields.Integer(default=2)
@@ -52,7 +52,7 @@ class EstateProperty(models.Model):
         #         if offer.price > max_price:
         #             max_price = offer.price
         #     record.best_price = max_price
-            prices  =record.offer_ids.mapped('price')
+            prices = record.offer_ids.mapped('price')
             record.best_price = max(prices) if prices else 0
 
     @api.onchange("garden")
