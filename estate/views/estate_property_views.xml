@@ -37,9 +37,12 @@
     <field name="arch" type="xml">
       <form string="Property Name">
         <header>
-          <button name="action_sold" type="object" string="Sold" invisible="state in ('Sold', 'Canceled')"/>
+          <!-- <button name="action_sold" type="object" string="Sold" invisible="state in ('Sold', 'Canceled')"/>
           <button name="action_cancel" type="object" string="Cancel" invisible="state in ('Sold', 'Canceled')"/>
-          <button type="action" name="%(estate_property_type_action)d" string="Property Type"/>
+          <button type="action" name="%(estate_property_type_action)d" string="Property Type"/> -->
+          <button name="action_sold" type="object" string="Sold" state="New,Offer Received"/>
+          <button name="action_sold" type="object" string="Sold" state="Offer Accepted" class="oe_highlight"/>
+          <button name="action_cancel" type="object" string="Cancel" state="New,Offer Received,Offer Accepted"/>
           <field name="state" widget="statusbar" statusbar_visible="New,Offer Received,Offer Accepted,Sold" options="{'clickable': '1'}"/>
         </header>        
         <sheet>
@@ -67,13 +70,16 @@
                 <field name="bedrooms"/>
                 <field name="garage"/>
                 <field name="garden"/>
-                <field name="garden_area" invisible="not garden"/>
+                <!-- this in v.17 -->
+                <!-- <field name="garden_area" invisible="not garden"/> -->
+                <field name="garden_area" attrs="{'invisible': [('garden', '=', False)]}"/>
                 <field name="total_area"/>
                 <field name="garden_orientation"/>
               </group>
             </page>
             <page string="Offers">
-              <field name="offer_ids" readonly="state in ('Sold','Canceled','Offer Accepted')"/>
+              <!-- <field name="offer_ids" readonly="state in ('Sold','Canceled','Offer Accepted')"/> -->
+              <field name="offer_ids" attrs="{'readonly': [('state', 'in', ('offer_accepted', 'sold', 'canceled'))]}"/>
             </page>
             <page string="Other">
               <group>

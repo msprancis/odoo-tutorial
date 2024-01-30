@@ -10,8 +10,10 @@
         <field name="partner_id"/>
         <field name="validity"/>
         <field name="deadline"/>
-        <button name="action_accept" type="object" title="Accept" icon="fa-check" invisible="status in ('Accepted')"/>
-        <button name="action_refuse" type="object" title="Refuse" icon="fa-times" invisible="status in ('Refused')"/>
+        <!-- <button name="action_accept" type="object" title="Accept" icon="fa-check" invisible="status in ('Accepted')"/>
+        <button name="action_refuse" type="object" title="Refuse" icon="fa-times" invisible="status in ('Refused')"/> -->
+        <button name="action_accept" type="object" title="Accept" icon="fa-check" attrs="{'invisible': [('status', '!=', False)]}"/>
+        <button name="action_refuse" type="object" title="Refuse" icon="fa-times" attrs="{'invisible': [('status', '!=', False)]}"/>
         <field name="status" invisible="1"/>
       </tree>
     </field>
