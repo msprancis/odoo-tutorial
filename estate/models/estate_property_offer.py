@@ -43,7 +43,7 @@ class EstatePropertyOffer(models.Model):
         prop_id = vals['property_id']
         properties = self.env['estate.property']
         aProp = properties.browse(prop_id)
-        aProp.state = 'Offer Received'
+        aProp.state = 'offer_received'
         if aProp.best_price > vals['price']:
             raise UserError('Offer lower than best price')
         return super().create(vals)

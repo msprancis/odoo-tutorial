@@ -12,8 +12,8 @@
     <field name="name">estate_property_tree</field>
     <field name="model">estate.property</field>
     <field name="arch" type="xml">
-      <tree string="Property" decoration-success="state in ('Offer Received','Offer Accepted')" 
-        decoration-bf="state=='Offer Accepted'" decoration-muted="state=='Sold'">
+      <tree string="Property" decoration-success="state in ('offer_received','offer_accepted')" 
+        decoration-bf="state=='Offer Accepted'" decoration-muted="state=='sold'">
         <field name="name" string="Title"/>
         <field name="type_id"/>
         <field name="postcode" string="Postcode"/>
@@ -40,10 +40,10 @@
           <!-- <button name="action_sold" type="object" string="Sold" invisible="state in ('Sold', 'Canceled')"/>
           <button name="action_cancel" type="object" string="Cancel" invisible="state in ('Sold', 'Canceled')"/>
           <button type="action" name="%(estate_property_type_action)d" string="Property Type"/> -->
-          <button name="action_sold" type="object" string="Sold" state="New,Offer Received"/>
-          <button name="action_sold" type="object" string="Sold" state="Offer Accepted" class="oe_highlight"/>
-          <button name="action_cancel" type="object" string="Cancel" state="New,Offer Received,Offer Accepted"/>
-          <field name="state" widget="statusbar" statusbar_visible="New,Offer Received,Offer Accepted,Sold" options="{'clickable': '1'}"/>
+          <button name="action_sold" type="object" string="Sold" state="new,offer_received"/>
+          <button name="action_sold" type="object" string="Sold" state="offer_accepted" class="oe_highlight"/>
+          <button name="action_cancel" type="object" string="Cancel" state="new,offer_received,offer_acceptedd"/>
+          <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold" options="{'clickable': '1'}"/>
         </header>        
         <sheet>
           <h1><field name="name" placeholder="Name"/></h1>
@@ -104,7 +104,7 @@
         <field name="bedrooms"/>
         <field name="living_area" string="Living Area >=" filter_domain="[('living_area', '>=', self)]"/>
         <field name="facades"/>
-        <filter name="available" string="Available"  domain="['|', ('state', '=', 'New'), ('state', '=', 'Received')]"/>
+        <filter name="available" string="Available"  domain="['|', ('state', '=', 'new'), ('state', '=', 'Received')]"/>
         <group expand="1" string="Group By">
           <filter name="postcode" context="{'group_by':'postcode'}"/>
         </group>
@@ -127,10 +127,10 @@
                 </strong>
               </div>
               Expected Price: <field name="expected_price"/>           
-              <div t-if="record.state.raw_value == 'Offer Received'">
+              <div t-if="record.state.raw_value == 'offer_received'">
                 Best Offer: <field name="best_price"/>
               </div>              
-              <div t-if="record.state.raw_value == 'Offer Accepted' or record.state.raw_value == 'Sold'">
+              <div t-if="record.state.raw_value == 'offer_accepted' or record.state.raw_value == 'sold'">
                 Selling Price: <field name="selling_price"/>
               </div>  
               <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>            

@@ -24,11 +24,11 @@ class EstateProperty(models.Model):
     garage = fields.Boolean()
     garden = fields.Boolean()
     garden_area = fields.Integer(string="Garden Area (sqm)")
-    garden_orientation = fields.Selection(selection=[('North', 'North'), ('South', 'South'), ('East', 'East'), ('West', 'West')])
+    garden_orientation = fields.Selection(selection=[('N', 'North'), ('S', 'South'), ('E', 'East'), ('W', 'West')])
     active = fields.Boolean(default=True)
-    state = fields.Selection(string="Status", selection=[('New', 'New'), ('Offer Received', 'Offer Received'), 
-                                        ('Offer Accepted', 'Offer Accepted'), ('Sold', 'Sold'), ('Canceled', 'Canceled')],
-                                        required=True, copy=False, default='New')
+    state = fields.Selection(string="Status", selection=[('new', 'New'), ('offer_received', 'Offer Received'), 
+                                        ('offer_accepted', 'Offer Accepted'), ('sold', 'Sold'), ('canceled', 'Canceled')],
+                                        required=True, copy=False, default='new')
     
     type_id = fields.Many2one("estate.property.type", string="Property Type")
     buyer_partner_id = fields.Many2one("res.partner", string="Buyer", copy=False)
@@ -59,7 +59,7 @@ class EstateProperty(models.Model):
     def _onchange_garden(self):
         if self.garden:
             self.garden_area = 10
-            self.garden_orientation = 'North'
+            self.garden_orientation = 'N'
         else:
             self.garden_area = 0
             self.garden_orientation = ''
@@ -68,11 +68,11 @@ class EstateProperty(models.Model):
         for record in self:
             if record.state == 'Canceled':
                 raise UserError('Canceled property can not be sold')
-            record.state = "Sold"
+            record.state = "sold"
         return True
     def action_cancel(self):
         for record in self:
-            if record.state == 'Sold':
+            if record.state == 'sold':
                 raise UserError('Sold property can not be canceled')
             record.state = "Canceled"
         return True
@@ -87,5 +87,5 @@ class EstateProperty(models.Model):
     @api.ondelete(at_uninstall=False)
     def _unlink_check(self):
         for r in self:
-            if r.state == 'New' or r.state == 'Canceled':
+            if r.state == 'new' or r.state == 'canceled':
                 raise UserError('Can\'t delete New or Canceled')
